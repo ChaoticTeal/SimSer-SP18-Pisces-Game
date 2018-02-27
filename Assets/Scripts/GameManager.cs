@@ -127,8 +127,8 @@ public class GameManager : MonoBehaviour
     void InitializeCapacities()
     {
         // Set capacity for common fire
-        commonFireCapacity = ((totalPlayers * capacityMultiplier) / numberOfGenerations) /
-            (numberOfRounds / numberOfGenerations) / ((int)commonGrowthRate / 2);
+        commonFireCapacity = (int)(((totalPlayers * capacityMultiplier) / numberOfGenerations) /
+            (numberOfRounds / numberOfGenerations) / (commonGrowthRate / 2f));
 
         // Use capacity to determine starting population
         bonfirePopulation = commonFireCapacity * startingPopulationMultiplier;
@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
         {
             villages.Add(Instantiate(villagePrefab));
             villages[i].GetComponent<Village>().NumberOfVillagers = Random.Range(1, 4);
+            totalVillagers += villages[i].GetComponent<Village>().NumberOfVillagers;
             for(int j = 0; j < villages[i].GetComponent<Village>().NumberOfVillagers; j++)
             {
                 GameObject villager = Instantiate(villagerPrefab, villages[i].transform);
