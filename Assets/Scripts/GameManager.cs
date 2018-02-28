@@ -36,6 +36,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     float villageRadius = 15f;
     /// <summary>
+    /// The camera rig, used to turn the camera each turn
+    /// </summary>
+    [Tooltip("The camera rig object.")]
+    [SerializeField]
+    GameObject cameraRig;
+    /// <summary>
     /// Reference to village prefab for instantiation
     /// </summary>
     [Tooltip("Village prefab. Used to instantiate for each player.")]
@@ -78,6 +84,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     float bonfirePopulation;
     /// <summary>
+    /// Active village number
+    /// </summary>
+    int activeVillageNumber;
+    /// <summary>
     /// Maximum capacity of wood in the fire
     /// </summary>
     int commonFireCapacity;
@@ -85,6 +95,10 @@ public class GameManager : MonoBehaviour
     /// Number of human players in the game. Use property instead.
     /// </summary>
     int humanPlayers_UseProperty;
+    /// <summary>
+    /// Current round number
+    /// </summary>
+    int roundNumber;
     /// <summary>
     /// Number of total players (villages) in the game 
     /// </summary>
@@ -113,6 +127,7 @@ public class GameManager : MonoBehaviour
 	{
         InitializeVillages();
         InitializeCapacities();
+        StartCoroutine(GameLoop());
 	}
 	
 	// Update is called once per frame
@@ -158,5 +173,24 @@ public class GameManager : MonoBehaviour
             villages[i].transform.position = pos;
             villages[i].transform.LookAt(transform);
         }
+    }
+
+    /// <summary>
+    /// The core loop of the game. 
+    /// Runs through the given number of rounds for the given number of villages.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator GameLoop()
+    {
+        for (roundNumber = 1; roundNumber <= numberOfRounds; roundNumber++)
+        {
+            for(activeVillageNumber = 1; activeVillageNumber<=totalPlayers; activeVillageNumber++)
+            {
+                villages[activeVillageNumber - 1].GetComponent<Village>().IsActiveTurn = true;
+                cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
+                //cameraRig.transform.rotation = Quaternion.Inverse(cameraRig.transform.rotation);
+            }
+        }
+        yield return null;
     }
 }

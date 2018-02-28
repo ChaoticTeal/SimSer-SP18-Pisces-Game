@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -884,10 +884,10 @@ MonoBehaviour:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.93103445, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.006896496, a: 1}
-  - {r: 0.6137934, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0.6413793, b: 0, a: 1}
-  - {r: 0, g: 0.91724133, b: 1, a: 1}
-  - {r: 1, g: 0, b: 0.88965464, a: 1}
+  - {r: 0, g: 0.9176471, b: 1, a: 1}
+  - {r: 0.6156863, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.6431373, b: 0, a: 1}
+  - {r: 0.737931, g: 1, b: 0, a: 1}
   - {r: 0, g: 0.1591785, b: 0.53676474, a: 1}
   - {r: 0.5661765, g: 0, b: 0, a: 1}
   - {r: 0.5735294, g: 0.34411764, b: 0, a: 1}
@@ -896,6 +896,7 @@ MonoBehaviour:
   privateGrowthRate: 0.3
   startingPopulationMultiplier: 0.6
   villageRadius: 15
+  cameraRig: {fileID: 1574838680}
   villagePrefab: {fileID: 1800046449030734, guid: 4631a5e5085bfc441acba4147b99e2bf,
     type: 2}
   villagerPrefab: {fileID: 1004767219085750, guid: 3c10c697204e24149aca26af7d0b68b7,
@@ -1059,13 +1060,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1090931874}
-  m_LocalRotation: {x: 0, y: 0.9914449, z: -0.13052616, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 5}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1574838681}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 15, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1340115586
 GameObject:
   m_ObjectHideFlags: 0

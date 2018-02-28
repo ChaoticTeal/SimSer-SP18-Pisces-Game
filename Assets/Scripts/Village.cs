@@ -17,8 +17,12 @@ public class Village : MonoBehaviour
     [Tooltip("List of possible spawn points for villagers.")]
     [SerializeField]
     public List<GameObject> villagerSpawnPoints;
-    
+
     // Private fields
+    /// <summary>
+    /// Is the village active?
+    /// </summary>
+    bool isActiveTurn_UseProperty;
     /// <summary>
     /// Restock rate of wood rack
     /// </summary>
@@ -45,6 +49,14 @@ public class Village : MonoBehaviour
     int woodRackStock;
 
     // Properties
+    /// <summary>
+    /// Public accessor for active turn state
+    /// </summary>
+    public bool IsActiveTurn
+    {
+        get { return isActiveTurn_UseProperty; }
+        set { isActiveTurn_UseProperty = value; }
+    }
     /// <summary>
     /// Public accessor for wood rack stock rate
     /// </summary>
