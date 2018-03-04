@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		
+        
 	}
 
     /// <summary>
@@ -154,24 +154,46 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void InitializeVillages()
     {
+        // TODO modify total number of players
+        // Loop per player
         for(int i = 0; i < totalPlayers; i++)
         {
+            // Instantiate the village
             villages.Add(Instantiate(villagePrefab));
+
+            // Randomly add 1 to 3 villagers
             villages[i].GetComponent<Village>().NumberOfVillagers = Random.Range(1, 4);
+            // Add the number to the total villagers
             totalVillagers += villages[i].GetComponent<Village>().NumberOfVillagers;
+            // Instantiate villagers
             for(int j = 0; j < villages[i].GetComponent<Village>().NumberOfVillagers; j++)
             {
                 GameObject villager = Instantiate(villagerPrefab, villages[i].transform);
+                // Place the villager at the spawn point
                 villager.transform.position = villages[i].GetComponent<Village>().villagerSpawnPoints[j].transform.position;
+                // Recolor the villager
                 villager.GetComponent<Renderer>().material.color = playerColors[i];
             }
+            // Recolor the hut
             villages[i].GetComponent<Village>().hut.GetComponent<Renderer>().material.color = playerColors[i];
+
+            // Make a new vector to set the village position
             Vector3 pos = new Vector3();
+            // Set the X and Z to the proper points along the circle with the defined radius around the fire
             pos.x = villageRadius * Mathf.Sin((360 / totalPlayers * i) * Mathf.Deg2Rad);
             pos.z = villageRadius * Mathf.Cos((360 / totalPlayers * i) * Mathf.Deg2Rad);
+            // Make the Y lame
             pos.y = 0;
+            // Move the village to the position
             villages[i].transform.position = pos;
+            // Rotate the village to face the fire
             villages[i].transform.LookAt(transform);
+        }
+        // Set max logs per turn
+        foreach (GameObject v in villages)
+        {
+            v.GetComponent<Village>().MaxLogsPerTurn = totalVillagers;
+            v.GetComponent<Village>().WoodRackStockRate = privateGrowthRate;
         }
     }
 
@@ -184,13 +206,58 @@ public class GameManager : MonoBehaviour
     {
         for (roundNumber = 1; roundNumber <= numberOfRounds; roundNumber++)
         {
-            for(activeVillageNumber = 1; activeVillageNumber<=totalPlayers; activeVillageNumber++)
+            // Reset each village so giving is possible
+            foreach (GameObject v in villages)
             {
+                v.GetComponent<Village>().IsActiveTurn = false;
+                // Restock private wood racks
+                v.GetComponent<Village>().RestockRack();
+            }
+            // Repopulate bonfire
+            bonfirePopulation = Mathf.Min(commonFireCapacity,
+                (int)((bonfirePopulation * commonGrowthRate) - ((bonfirePopulation * commonGrowthRate) *
+                (bonfirePopulation / commonFireCapacity)) + bonfirePopulation));
+            for(activeVillageNumber = 1; activeVillageNumber <= totalPlayers; activeVillageNumber++)
+            {
+                // If the village is dead, skip it
+                if (villages[activeVillageNumber - 1].GetComponent<Village>().IsDead)
+                    continue;
+                // Note that village turn has passed
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsActiveTurn = true;
                 cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
-                //cameraRig.transform.rotation = Quaternion.Inverse(cameraRig.transform.rotation);
+                // TODO identify active player in player text
+                
+                /*while(!cameraMoveTest)
+                 * TODO Whatever logic should determine that a turn has ended
+                    yield return null;*/
             }
         }
         yield return null;
     }
+
+    // TODO Write function for "Collect" button
+    // Should hide initial panel and show collect panel
+
+    // TODO Write function for first "Share" button
+    // Should hide initial panel and show share panel
+
+    /* TODO Write function for second "Share" button
+    Should validate that the target village hasn't gone and fail if it has
+    (should be simple, check whether the village of the given number's IsActiveTurn is true, if so, it's gone)
+    Set the slider max value to the total logs possessed by village of number activeVillageNumber - 1
+    If the target village is eligible to receive wood, add to the target village and subtract from the current village
+    Finally, hide share panel and show initial panel */
+
+    /* TODO Write function for collect "Continue" button
+    Should set slider max value to the maximum logs possible per round
+    Validate that the common fire contains that much wood
+    If all goes well, save the value for the next panel, hide the collect panel and show the allocation panel
+    */
+
+    /* TODO Write function for "End Turn" button
+    Should validate the values in each input field
+    If they add up properly, add each value to its respective place
+    Check if the village dies (can't sustain all members) and assign accordingly
+    Finally, tell the coroutine to continue, hide the allocation panel, and show the initial panel
+    */ 
 }

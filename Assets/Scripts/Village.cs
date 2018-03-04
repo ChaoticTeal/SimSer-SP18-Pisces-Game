@@ -28,6 +28,10 @@ public class Village : MonoBehaviour
     /// </summary>
     float woodRackStockRate_UseProperty;
     /// <summary>
+    /// Number of logs obtainable per turn
+    /// </summary>
+    int maxLogsPerTurn_UseProperty;
+    /// <summary>
     /// Number of residents in the village - must be between 1-3
     /// </summary>
     int numberOfVillagers_UseProperty;
@@ -58,12 +62,27 @@ public class Village : MonoBehaviour
         set { isActiveTurn_UseProperty = value; }
     }
     /// <summary>
+    /// Public acessor for whether village is alive or not
+    /// </summary>
+    public bool IsDead
+    {
+        get; set;
+    }
+    /// <summary>
     /// Public accessor for wood rack stock rate
     /// </summary>
     public float WoodRackStockRate
     {
         get { return woodRackStockRate_UseProperty; }
         set { woodRackStockRate_UseProperty = value; }
+    }
+    /// <summary>
+    /// Public accessor for max logs per turn
+    /// </summary>
+    public int MaxLogsPerTurn
+    {
+        get { return maxLogsPerTurn_UseProperty; }
+        set { maxLogsPerTurn_UseProperty = value; }
     }
     /// <summary>
     /// Public accessor for number of villagers
@@ -93,7 +112,7 @@ public class Village : MonoBehaviour
     /// <summary>
     /// Set capacity of private wood rack based on wood invested into it
     /// </summary>
-    void SetCapacity()
+    public void SetCapacity()
     {
         woodRackCapacity = (int)Mathf.Pow(woodRackInvestment / 2, 1.5f);
     }
@@ -102,7 +121,7 @@ public class Village : MonoBehaviour
     /// Take wood from wood rack to use for daily heat
     /// </summary>
     /// <param name="amount">Amount of wood to remove</param>
-    protected void TakeWoodFromRack(int amount)
+    public void TakeWoodFromRack(int amount)
     {
         woodRackStock -= amount;
         totalLogsConsumed += amount;
@@ -112,7 +131,7 @@ public class Village : MonoBehaviour
     /// Add wood to wood rack for later use
     /// </summary>
     /// <param name="amount">Amount of wood to add</param>
-    protected void AddWoodToRack(int amount)
+    public void AddWoodToRack(int amount)
     {
         woodRackStock += amount;
     }
@@ -120,7 +139,7 @@ public class Village : MonoBehaviour
     /// <summary>
     /// Restock rack between rounds based on present stock
     /// </summary>
-    protected void RestockRack()
+    public void RestockRack()
     {
         woodRackStock += (int)(woodRackStock * WoodRackStockRate);
         woodRackStock = Mathf.Min(woodRackStock, woodRackCapacity);
