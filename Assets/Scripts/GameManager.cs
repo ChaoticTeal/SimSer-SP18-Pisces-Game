@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -237,6 +238,7 @@ public class GameManager : MonoBehaviour
 
     // TODO Write function for "Collect" button
     // Should hide initial panel and show collect panel
+
 
     // TODO Write function for first "Share" button
     // Should hide initial panel and show share panel
