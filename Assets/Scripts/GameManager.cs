@@ -79,6 +79,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int numberOfRounds = 8;
 
+    //SerializeFields related to the UI
+    [SerializeField]
+    Text currentPlayerTag;
+    [SerializeField]
+    GameObject summary, share, collect, allocation;
+
+
     // Private fields
     /// <summary>
     /// Bonfire population
@@ -156,6 +163,7 @@ public class GameManager : MonoBehaviour
     void InitializeVillages()
     {
         // TODO modify total number of players
+        totalPlayers = NumberOfPlayers.numberOfPlayers;
         // Loop per player
         for(int i = 0; i < totalPlayers; i++)
         {
@@ -227,7 +235,8 @@ public class GameManager : MonoBehaviour
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsActiveTurn = true;
                 cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
                 // TODO identify active player in player text
-                
+                currentPlayerTag.text = "Player " + (activeVillageNumber - 1);
+
                 /*while(!cameraMoveTest)
                  * TODO Whatever logic should determine that a turn has ended
                     yield return null;*/
@@ -238,10 +247,19 @@ public class GameManager : MonoBehaviour
 
     // TODO Write function for "Collect" button
     // Should hide initial panel and show collect panel
-
+    public void Collect()
+    {
+        summary.SetActive(false);
+        collect.SetActive(true);
+    }
 
     // TODO Write function for first "Share" button
     // Should hide initial panel and show share panel
+    public void Share()
+    {
+        summary.SetActive(false);
+        share.SetActive(true);
+    }
 
     /* TODO Write function for second "Share" button
     Should validate that the target village hasn't gone and fail if it has
@@ -249,6 +267,8 @@ public class GameManager : MonoBehaviour
     Set the slider max value to the total logs possessed by village of number activeVillageNumber - 1
     If the target village is eligible to receive wood, add to the target village and subtract from the current village
     Finally, hide share panel and show initial panel */
+
+
 
     /* TODO Write function for collect "Continue" button
     Should set slider max value to the maximum logs possible per round
