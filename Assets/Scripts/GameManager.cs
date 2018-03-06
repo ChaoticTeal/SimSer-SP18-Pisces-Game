@@ -84,6 +84,12 @@ public class GameManager : MonoBehaviour
     Text currentPlayerTag;
     [SerializeField]
     GameObject summary, share, collect, allocation;
+    [SerializeField]
+    Slider shareAmount;
+    [SerializeField]
+    InputField teamNumber;
+    [SerializeField]
+    Slider commonCollect, privateCollect;
 
 
     // Private fields
@@ -119,6 +125,8 @@ public class GameManager : MonoBehaviour
     /// List of village instances
     /// </summary>
     List<GameObject> villages = new List<GameObject>();
+    int totalWoodToAllocate;
+    bool turnEnd;
 
     // Properties
     /// <summary>
@@ -237,7 +245,9 @@ public class GameManager : MonoBehaviour
                 // TODO identify active player in player text
                 currentPlayerTag.text = "Player " + (activeVillageNumber - 1);
 
-                /*while(!cameraMoveTest)
+                //shareAmount.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().wo
+                
+                    /*while(!cameraMoveTest)
                  * TODO Whatever logic should determine that a turn has ended
                     yield return null;*/
             }
@@ -255,7 +265,7 @@ public class GameManager : MonoBehaviour
 
     // TODO Write function for first "Share" button
     // Should hide initial panel and show share panel
-    public void Share()
+    public void ShareScreen()
     {
         summary.SetActive(false);
         share.SetActive(true);
@@ -267,7 +277,19 @@ public class GameManager : MonoBehaviour
     Set the slider max value to the total logs possessed by village of number activeVillageNumber - 1
     If the target village is eligible to receive wood, add to the target village and subtract from the current village
     Finally, hide share panel and show initial panel */
+    public void ShareWithTeam()
+    {
+        int team = System.Convert.ToInt32(teamNumber);
+        if (villages[team-1].GetComponent<Village>().IsActiveTurn == true)
+        {
 
+        }
+        else
+        {
+
+        }
+
+    }
 
 
     /* TODO Write function for collect "Continue" button
@@ -275,6 +297,13 @@ public class GameManager : MonoBehaviour
     Validate that the common fire contains that much wood
     If all goes well, save the value for the next panel, hide the collect panel and show the allocation panel
     */
+    public void Continue()
+    {
+
+
+
+    }
+
 
     /* TODO Write function for "End Turn" button
     Should validate the values in each input field
@@ -282,4 +311,11 @@ public class GameManager : MonoBehaviour
     Check if the village dies (can't sustain all members) and assign accordingly
     Finally, tell the coroutine to continue, hide the allocation panel, and show the initial panel
     */ 
+
+    public void EndTurn()
+    {
+
+
+
+    }
 }
