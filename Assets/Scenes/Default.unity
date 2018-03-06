@@ -2037,6 +2037,11 @@ MonoBehaviour:
   logsToLive: 4
   numberOfGenerations: 1
   numberOfRounds: 8
+  currentPlayerTag: {fileID: 0}
+  summary: {fileID: 0}
+  share: {fileID: 0}
+  collect: {fileID: 0}
+  allocation: {fileID: 0}
 --- !u!4 &1030337996
 Transform:
   m_ObjectHideFlags: 0
