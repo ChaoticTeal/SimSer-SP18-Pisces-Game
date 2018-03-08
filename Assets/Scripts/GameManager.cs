@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour
                 // TODO add summary to the first panel
                 summaryText.text = "You have " + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villagers to care for. You need "
                     + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm them all. Your private wood rack contains "
-                    + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold ";
+                    + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold " + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackCapacity + ". What would you like to do?";
 
                 shareAmount.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock;
                 shareAmountText.text = shareAmount.value.ToString("0");

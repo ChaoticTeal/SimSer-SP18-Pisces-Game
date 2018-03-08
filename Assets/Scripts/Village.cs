@@ -42,7 +42,7 @@ public class Village : MonoBehaviour
     /// <summary>
     /// Capacity of wood rack
     /// </summary>
-    int woodRackCapacity;
+    int woodRackCapacity_UseProperty;
     /// <summary>
     /// Logs invested into wood rack capacity
     /// </summary>
@@ -130,9 +130,14 @@ public class Village : MonoBehaviour
         get; set;
     }
 
+    public int WoodRackCapacity
+    {
+        get { return woodRackCapacity_UseProperty; }
+        set { woodRackCapacity_UseProperty = value; }
+    }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
 	{
 		
 	}
@@ -148,7 +153,7 @@ public class Village : MonoBehaviour
     /// </summary>
     public void SetCapacity()
     {
-        woodRackCapacity = (int)Mathf.Pow(WoodRackInvestment / 2, 1.5f);
+        WoodRackCapacity = (int)Mathf.Pow(WoodRackInvestment / 2, 1.5f);
     }
 
     /// <summary>
@@ -175,6 +180,6 @@ public class Village : MonoBehaviour
     public void RestockRack()
     {
         WoodRackStock += (int)(WoodRackStock * WoodRackStockRate);
-        WoodRackStock = Mathf.Min(WoodRackStock, woodRackCapacity);
+        WoodRackStock = Mathf.Min(WoodRackStock, WoodRackCapacity);
     }
 }
