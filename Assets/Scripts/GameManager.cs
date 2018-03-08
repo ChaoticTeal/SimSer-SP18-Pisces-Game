@@ -129,6 +129,10 @@ public class GameManager : MonoBehaviour
     /// List of village instances
     /// </summary>
     List<GameObject> villages = new List<GameObject>();
+    /// <summary>
+    /// List of dead villages
+    /// </summary>
+    List<int> deadVillages = new List<int>();
     int totalWoodToAllocate;
     bool turnEnd;
 
@@ -225,8 +229,11 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator GameLoop()
     {
+        bool deadCheck = false;
         for (roundNumber = 1; roundNumber <= numberOfRounds; roundNumber++)
         {
+            if (deadVillages.Count == totalPlayers)
+                continue;
             // Reset each village so giving is possible
             foreach (GameObject v in villages)
             {
@@ -242,15 +249,23 @@ public class GameManager : MonoBehaviour
             {
                 // If the village is dead, skip it
                 if (villages[activeVillageNumber - 1].GetComponent<Village>().IsDead)
+                {
+                    foreach (int i in deadVillages)
+                        if (i == activeVillageNumber)
+                            deadCheck = true;
+                    if (!deadCheck)
+                        deadVillages.Add(activeVillageNumber);
+                    deadCheck = false;
                     continue;
+                }
                 // Note that village turn has passed
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsActiveTurn = true;
                 cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
                 // Identify active player in player text
-                currentPlayerTag.text = "Player " + (activeVillageNumber - 1);
+                currentPlayerTag.text = "Player " + (activeVillageNumber);
 
                 // TODO add summary to the first panel
-                summaryText.text = "You have " + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villagers to care for. You need "
+                summaryText.text = "You have " + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villager(s) to care for. You need "
                     + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm them all. Your private wood rack contains "
                     + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold " + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackCapacity + ". What would you like to do?";
 
@@ -266,11 +281,12 @@ public class GameManager : MonoBehaviour
                 privateCollect.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock;
                 privateAmountText.text = privateCollect.value.ToString("0");
 
-                    /*while(!cameraMoveTest)
-                 * TODO Whatever logic should determine that a turn has ended
-                    yield return null;*/
+                while(!turnEnd)
+                    yield return null;
+                turnEnd = false;
             }
         }
+        // TODO trigger end state
         yield return null;
     }
 
