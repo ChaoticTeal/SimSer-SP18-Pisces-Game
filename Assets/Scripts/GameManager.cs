@@ -90,6 +90,10 @@ public class GameManager : MonoBehaviour
     InputField teamNumber;
     [SerializeField]
     Slider commonCollect, privateCollect;
+    [SerializeField]
+    InputField consumeWood, addToPrivate, investToPrivate;
+    [SerializeField]
+    Text summaryText, shareAmountText, commonAmountText, privateAmountText, errorMessageTeam, errorMessageAllocation;
 
 
     // Private fields
@@ -242,11 +246,26 @@ public class GameManager : MonoBehaviour
                 // Note that village turn has passed
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsActiveTurn = true;
                 cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
-                // TODO identify active player in player text
+                // Identify active player in player text
                 currentPlayerTag.text = "Player " + (activeVillageNumber - 1);
 
-                //shareAmount.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().wo
-                
+                // TODO add summary to the first panel
+                summaryText.text = "You have " + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villagers to care for. You need "
+                    + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm them all. Your private wood rack contains "
+                    + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold ";
+
+                shareAmount.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock;
+                shareAmountText.text = shareAmount.value.ToString("0");
+                //Set slider max value to the maximum logs possible per round
+                if (villages[activeVillageNumber - 1].GetComponent<Village>().MaxLogsPerTurn <= bonfirePopulation)
+                    commonCollect.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().MaxLogsPerTurn;
+                else
+                    commonCollect.maxValue = bonfirePopulation;
+
+                commonAmountText.text = commonCollect.value.ToString("0");
+                privateCollect.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock;
+                privateAmountText.text = privateCollect.value.ToString("0");
+
                     /*while(!cameraMoveTest)
                  * TODO Whatever logic should determine that a turn has ended
                     yield return null;*/
@@ -255,7 +274,7 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    // TODO Write function for "Collect" button
+   
     // Should hide initial panel and show collect panel
     public void Collect()
     {
@@ -263,8 +282,8 @@ public class GameManager : MonoBehaviour
         collect.SetActive(true);
     }
 
-    // TODO Write function for first "Share" button
-    // Should hide initial panel and show share panel
+    
+    //Hide initial panel and show share panel
     public void ShareScreen()
     {
         summary.SetActive(false);
@@ -280,28 +299,33 @@ public class GameManager : MonoBehaviour
     public void ShareWithTeam()
     {
         int team = System.Convert.ToInt32(teamNumber);
-        if (villages[team-1].GetComponent<Village>().IsActiveTurn == true)
+        if (team <= 12 && villages[team-1].GetComponent<Village>().IsActiveTurn == false)
         {
+            villages[team - 1].GetComponent<Village>().TheShadowRealm += (int)shareAmount.value;
+            villages[activeVillageNumber - 1].GetComponent<Village>().TakeWoodFromRack((int)shareAmount.value);
+            share.SetActive(false);
+            summary.SetActive(true);
 
         }
         else
         {
-
+            errorMessageTeam.text = "You can not share with this team, please pick another team or return to the action select.";
         }
 
     }
 
 
     /* TODO Write function for collect "Continue" button
-    Should set slider max value to the maximum logs possible per round
     Validate that the common fire contains that much wood
     If all goes well, save the value for the next panel, hide the collect panel and show the allocation panel
     */
     public void Continue()
     {
-
-
-
+        villages[activeVillageNumber - 1].GetComponent<Village>().TakeWoodFromRack((int)privateCollect.value);
+        totalWoodToAllocate = (int)commonCollect.value + (int)privateCollect.value;
+        bonfirePopulation -= (int)commonCollect.value;
+        collect.SetActive(false);
+        allocation.SetActive(true);
     }
 
 
@@ -314,6 +338,33 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
+        int consume = System.Convert.ToInt32(consumeWood);
+        int privateRack = System.Convert.ToInt32(addToPrivate);
+        int invest = System.Convert.ToInt32(investToPrivate);
+        if (consume + privateRack + invest == totalWoodToAllocate)
+        {
+                if((logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) <= consume)
+            {
+                villages[activeVillageNumber - 1].GetComponent<Village>().TotalLogsConsumed += consume;
+                villages[activeVillageNumber - 1].GetComponent<Village>().AddWoodToRack(privateRack);
+                villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment = invest;
+                allocation.SetActive(false);
+                summary.SetActive(true);
+
+                turnEnd = true;
+
+            }
+                else
+            {
+                villages[activeVillageNumber = 1].GetComponent<Village>().IsDead = true;
+                turnEnd = true;
+            }
+
+        }
+        else
+        {
+            errorMessageAllocation.text = "You have not used all of the collect wood. You have " + totalWoodToAllocate + " wood to allocate. Please allocate it all.";
+        }
 
 
 

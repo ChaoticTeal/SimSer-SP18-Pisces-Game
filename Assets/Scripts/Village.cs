@@ -38,7 +38,7 @@ public class Village : MonoBehaviour
     /// <summary>
     /// Total logs consumed for daily heating
     /// </summary>
-    int totalLogsConsumed;
+    int totalLogsConsumed_UseProperty;
     /// <summary>
     /// Capacity of wood rack
     /// </summary>
@@ -46,11 +46,11 @@ public class Village : MonoBehaviour
     /// <summary>
     /// Logs invested into wood rack capacity
     /// </summary>
-    int woodRackInvestment;
+    int woodRackInvestment_UseProperty;
     /// <summary>
     /// Logs stocked in private wood rack
     /// </summary>
-    int woodRackStock;
+    int woodRackStock_UseProperty;
 
     // Properties
     /// <summary>
@@ -84,6 +84,12 @@ public class Village : MonoBehaviour
         get { return maxLogsPerTurn_UseProperty; }
         set { maxLogsPerTurn_UseProperty = value; }
     }
+
+    public int WoodRackStock
+    {
+        get { return woodRackStock_UseProperty; }
+        set { woodRackStock_UseProperty = value; }
+    }
     /// <summary>
     /// Public accessor for number of villagers
     /// </summary>
@@ -96,6 +102,34 @@ public class Village : MonoBehaviour
             numberOfVillagers_UseProperty = Mathf.Max(numberOfVillagers_UseProperty, 1);
         }
     }
+    /// <summary>
+    /// Public accessor for invested logs -- updates the capacity
+    /// </summary>
+    public int WoodRackInvestment
+    {
+        get { return woodRackInvestment_UseProperty; }
+        set
+        {
+            woodRackInvestment_UseProperty = value;
+            SetCapacity();
+        }
+    }
+    /// <summary>
+    /// Public accessor for total logs consumed
+    /// </summary>
+    public int TotalLogsConsumed
+    {
+        get { return totalLogsConsumed_UseProperty; }
+        set { totalLogsConsumed_UseProperty = value; }
+    }
+    /// <summary>
+    /// Public accessor for THE SHADOW REALM
+    /// </summary>
+    public int TheShadowRealm
+    {
+        get; set;
+    }
+
 
 	// Use this for initialization
 	void Start () 
@@ -107,14 +141,14 @@ public class Village : MonoBehaviour
 	void Update () 
 	{
 		
-	}
+	}//jacob wasn't here 
 
     /// <summary>
     /// Set capacity of private wood rack based on wood invested into it
     /// </summary>
     public void SetCapacity()
     {
-        woodRackCapacity = (int)Mathf.Pow(woodRackInvestment / 2, 1.5f);
+        woodRackCapacity = (int)Mathf.Pow(WoodRackInvestment / 2, 1.5f);
     }
 
     /// <summary>
@@ -123,8 +157,7 @@ public class Village : MonoBehaviour
     /// <param name="amount">Amount of wood to remove</param>
     public void TakeWoodFromRack(int amount)
     {
-        woodRackStock -= amount;
-        totalLogsConsumed += amount;
+        WoodRackStock -= amount;
     }
 
     /// <summary>
@@ -133,7 +166,7 @@ public class Village : MonoBehaviour
     /// <param name="amount">Amount of wood to add</param>
     public void AddWoodToRack(int amount)
     {
-        woodRackStock += amount;
+        WoodRackStock += amount;
     }
 
     /// <summary>
@@ -141,7 +174,7 @@ public class Village : MonoBehaviour
     /// </summary>
     public void RestockRack()
     {
-        woodRackStock += (int)(woodRackStock * WoodRackStockRate);
-        woodRackStock = Mathf.Min(woodRackStock, woodRackCapacity);
+        WoodRackStock += (int)(WoodRackStock * WoodRackStockRate);
+        WoodRackStock = Mathf.Min(WoodRackStock, woodRackCapacity);
     }
 }
