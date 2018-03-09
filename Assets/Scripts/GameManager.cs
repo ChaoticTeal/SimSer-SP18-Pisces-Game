@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text currentPlayerTag;
     [SerializeField]
-    GameObject summary, share, collect, allocation;
+    GameObject summary, share, collect, allocation, end, playerTag;
     [SerializeField]
     Slider shareAmount;
     [SerializeField]
@@ -94,6 +95,8 @@ public class GameManager : MonoBehaviour
     InputField consumeWood, addToPrivate, investToPrivate;
     [SerializeField]
     Text summaryText, shareAmountText, commonAmountText, privateAmountText, errorMessageTeam, errorMessageAllocation;
+    [SerializeField]
+    Text bonFireAmount, endText;
 
 
     // Private fields
@@ -287,6 +290,20 @@ public class GameManager : MonoBehaviour
             }
         }
         // TODO trigger end state
+        summary.SetActive(false);
+        end.SetActive(true);
+        playerTag.SetActive(false);
+        bonFireAmount.text = "The amount of wood in the communal bonfire is " + bonfirePopulation;
+        if(bonfirePopulation == 0)
+        {
+            endText.text = "Your actions have caused the complete elimination of wood in your willages. Survival is nearly impossible. " +
+                "Take in to account the actions for the greater good than actions for selfish greed. Welcome to the Tragedy of the Commons.";
+        }
+        else
+        {
+            endText.text = "The villages have survived the years with wood intact. " +
+                "Actions that protect the community are far more rewarding than those that focus on a single person's greed. Welcome to the Tragedy of the Commons.";
+        }
         yield return null;
     }
 
@@ -384,5 +401,10 @@ public class GameManager : MonoBehaviour
 
 
 
+    }
+
+    public void ToTheAssessment()
+    {
+        SceneManager.LoadScene(2);
     }
 }

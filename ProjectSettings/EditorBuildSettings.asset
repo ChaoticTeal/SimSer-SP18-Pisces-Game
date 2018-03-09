@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Default.unity
     guid: 6fcb0275383d3294d92e307f6f37f24c
+  - enabled: 1
+    path: Assets/Scenes/EndingAssessment.unity
+    guid: 5ba76300f76a32047b73103cbae00f84

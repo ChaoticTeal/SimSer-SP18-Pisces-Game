@@ -1252,8 +1252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1.6, y: 1.7}
+  m_SizeDelta: {x: -52.7, y: -45.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541747028
 MonoBehaviour:
@@ -1278,7 +1278,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: c3048d7726497b3408f5f8488b04d143, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
@@ -2783,6 +2783,8 @@ MonoBehaviour:
   share: {fileID: 1532727515}
   collect: {fileID: 1945408993}
   allocation: {fileID: 2084761183}
+  end: {fileID: 1726833389}
+  playerTag: {fileID: 130684778}
   shareAmount: {fileID: 1817051531}
   teamNumber: {fileID: 284368053}
   commonCollect: {fileID: 1737710147}
@@ -2796,6 +2798,8 @@ MonoBehaviour:
   privateAmountText: {fileID: 1672149200}
   errorMessageTeam: {fileID: 396565471}
   errorMessageAllocation: {fileID: 1186320120}
+  bonFireAmount: {fileID: 954882845}
+  endText: {fileID: 270270205}
 --- !u!4 &1030337996
 Transform:
   m_ObjectHideFlags: 0
@@ -3313,7 +3317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1381226477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4351,7 +4355,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1656766580}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1030337995}
+        m_MethodName: ToTheAssessment
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1656766580
@@ -4492,7 +4507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1726833390
 RectTransform:
   m_ObjectHideFlags: 0

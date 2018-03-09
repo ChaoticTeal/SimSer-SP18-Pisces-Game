@@ -148,7 +148,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -18, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &9231046
 MonoBehaviour:
@@ -231,7 +231,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 221.99994, y: 4}
+  m_AnchoredPosition: {x: 217, y: 18}
   m_SizeDelta: {x: 174.1, y: 42.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &15150324
@@ -278,11 +278,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
+    - m_Text: False
       m_Image: {fileID: 0}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-    - m_Text: Option C
+    - m_Text: True
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -440,7 +438,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 221.99994, y: 4}
+  m_AnchoredPosition: {x: 221.99994, y: 12.816401}
   m_SizeDelta: {x: 174.1, y: 42.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &220396881
@@ -487,11 +485,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
+    - m_Text: No
       m_Image: {fileID: 0}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-    - m_Text: Option C
+    - m_Text: Yes
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -813,7 +809,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -883,7 +879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 113.65677, y: -47.982765}
+  m_AnchoredPosition: {x: 219, y: -27}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &387135942
@@ -972,7 +968,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 108.45683, y: -50.999992}
+  m_AnchoredPosition: {x: 212, y: -35}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &449145998
@@ -1171,7 +1167,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 517315005}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1734200068}
+        m_MethodName: ReturnToTitle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &517315005
@@ -1444,7 +1451,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Option A
+  m_Text: False
 --- !u!222 &626535809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1598,7 +1605,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 375998501}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.2
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1789,8 +1796,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 18}
-  m_SizeDelta: {x: 215.4, y: 58.2}
+  m_AnchoredPosition: {x: -100.09999, y: -5.953228}
+  m_SizeDelta: {x: 244.6, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &700363955
 MonoBehaviour:
@@ -1838,7 +1845,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Question 2:'
+  m_Text: 'Question 2: The definition is individuals trying to reap more benefits
+    from a resource.'
 --- !u!222 &700363957
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2344,7 +2352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 216.80002, y: -1}
+  m_AnchoredPosition: {x: 216.80002, y: 10}
   m_SizeDelta: {x: 174.1, y: 42.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &961221395
@@ -2391,11 +2399,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
+    - m_Text: Economic
       m_Image: {fileID: 0}
-    - m_Text: Option B
+    - m_Text: Social Science
       m_Image: {fileID: 0}
-    - m_Text: Option C
+    - m_Text: Both
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2584,7 +2592,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Option A
+  m_Text: Economic
 --- !u!222 &1005086300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3491,8 +3499,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -94.8, y: 109}
-  m_SizeDelta: {x: 216.4, y: 63.5}
+  m_AnchoredPosition: {x: -100.1, y: 97.53868}
+  m_SizeDelta: {x: 244.6, y: 86.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590172354
 MonoBehaviour:
@@ -3534,13 +3542,13 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Question 1: '
+  m_Text: 'Question 1: The Tragedy of the Commons is what type of a problem?'
 --- !u!222 &1590172356
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3680,6 +3688,52 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1643161132}
+--- !u!1 &1734200067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1734200069}
+  - component: {fileID: 1734200068}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1734200068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1734200067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb0240075d0bc745a4ad186a37c045b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Q1Dropdown: {fileID: 961221395}
+  Q2Dropdown: {fileID: 15150324}
+  Q3Dropdown: {fileID: 220396881}
+  Q1Answer: {fileID: 449145999}
+  Q2Answer: {fileID: 387135943}
+  Q3Answer: {fileID: 1881323214}
+--- !u!4 &1734200069
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1734200067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 328.25043, y: 134.49574, z: 8.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805537282
 GameObject:
   m_ObjectHideFlags: 0
@@ -3747,7 +3801,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Option A
+  m_Text: No
 --- !u!222 &1805537285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3787,7 +3841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 113.65677, y: -47.982765}
+  m_AnchoredPosition: {x: 223, y: -34}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1881323213
@@ -3960,8 +4014,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -99.999985, y: -74}
-  m_SizeDelta: {x: 215.4, y: 58.2}
+  m_AnchoredPosition: {x: -100.1, y: -87.2}
+  m_SizeDelta: {x: 244.6, y: 84.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1941319770
 MonoBehaviour:
@@ -4009,7 +4063,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Question 3:'
+  m_Text: 'Question 3: Is the Tragedy of the Commons a real problem today?'
 --- !u!222 &1941319772
 CanvasRenderer:
   m_ObjectHideFlags: 0
