@@ -136,18 +136,6 @@ public class Village : MonoBehaviour
         set { woodRackCapacity_UseProperty = value; }
     }
 
-    // Use this for initialization
-    void Start () 
-	{
-		
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}//jacob wasn't here 
-
     /// <summary>
     /// Set capacity of private wood rack based on wood invested into it
     /// </summary>

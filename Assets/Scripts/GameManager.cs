@@ -332,7 +332,7 @@ public class GameManager : MonoBehaviour
     public void ShareWithTeam()
     {
         int team = System.Convert.ToInt32(teamNumber);
-        if (team <= 12 && villages[team-1].GetComponent<Village>().IsActiveTurn == false)
+        if (team <= totalPlayers && !villages[team-1].GetComponent<Village>().IsActiveTurn && !villages[team - 1].GetComponent<Village>().IsDead)
         {
             villages[team - 1].GetComponent<Village>().TheShadowRealm += (int)shareAmount.value;
             villages[activeVillageNumber - 1].GetComponent<Village>().TakeWoodFromRack((int)shareAmount.value);
@@ -355,7 +355,8 @@ public class GameManager : MonoBehaviour
     public void Continue()
     {
         villages[activeVillageNumber - 1].GetComponent<Village>().TakeWoodFromRack((int)privateCollect.value);
-        totalWoodToAllocate = (int)commonCollect.value + (int)privateCollect.value;
+        totalWoodToAllocate = (int)commonCollect.value + (int)privateCollect.value + villages[activeVillageNumber - 1].GetComponent<Village>().TheShadowRealm;
+        villages[activeVillageNumber - 1].GetComponent<Village>().TheShadowRealm = 0;
         bonfirePopulation -= (int)commonCollect.value;
         collect.SetActive(false);
         allocation.SetActive(true);
@@ -374,9 +375,14 @@ public class GameManager : MonoBehaviour
         int consume = System.Convert.ToInt32(consumeWood);
         int privateRack = System.Convert.ToInt32(addToPrivate);
         int invest = System.Convert.ToInt32(investToPrivate);
-        if (consume + privateRack + invest == totalWoodToAllocate)
+        if(privateRack + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock >
+            (int)Mathf.Pow((villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment + invest)/ 2, 1.5f))
         {
-                if((logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) <= consume)
+            errorMessageAllocation.text = "Your wood rack cannot hold " + privateRack + " more wood. Please adjust allocation.";
+        }
+        else if (consume + privateRack + invest == totalWoodToAllocate)
+        {
+            if((logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) <= consume)
             {
                 villages[activeVillageNumber - 1].GetComponent<Village>().TotalLogsConsumed += consume;
                 villages[activeVillageNumber - 1].GetComponent<Village>().AddWoodToRack(privateRack);
@@ -387,9 +393,11 @@ public class GameManager : MonoBehaviour
                 turnEnd = true;
 
             }
-                else
+            else
             {
                 villages[activeVillageNumber = 1].GetComponent<Village>().IsDead = true;
+                allocation.SetActive(false);
+                summary.SetActive(true);
                 turnEnd = true;
             }
 
