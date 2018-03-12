@@ -79,6 +79,12 @@ public class GameManager : MonoBehaviour
     [Tooltip("Number of rounds per game.")]
     [SerializeField]
     int numberOfRounds = 8;
+    /// <summary>
+    /// Bonfire object
+    /// </summary>
+    [Tooltip("The bonfire.")]
+    [SerializeField]
+    GameObject bonfire;
 
     //SerializeFields related to the UI
     [SerializeField]
@@ -88,11 +94,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Slider shareAmount;
     [SerializeField]
-    InputField teamNumber;
+    Text teamNumber;
     [SerializeField]
     Slider commonCollect, privateCollect;
     [SerializeField]
-    InputField consumeWood, addToPrivate, investToPrivate;
+    Text consumeWood, addToPrivate, investToPrivate;
     [SerializeField]
     Text summaryText, shareAmountText, commonAmountText, privateAmountText, errorMessageTeam, errorMessageAllocation;
     [SerializeField]
@@ -250,6 +256,8 @@ public class GameManager : MonoBehaviour
                 (bonfirePopulation / commonFireCapacity)) + bonfirePopulation));
             for(activeVillageNumber = 1; activeVillageNumber <= totalPlayers; activeVillageNumber++)
             {
+                if (bonfirePopulation <= 0)
+                    bonfire.SetActive(false);
                 // If the village is dead, skip it
                 if (villages[activeVillageNumber - 1].GetComponent<Village>().IsDead)
                 {
@@ -315,12 +323,39 @@ public class GameManager : MonoBehaviour
         collect.SetActive(true);
     }
 
-    
+
     //Hide initial panel and show share panel
     public void ShareScreen()
     {
         summary.SetActive(false);
         share.SetActive(true);
+    }
+    
+    //Hide share panel and show initial panel
+    public void ShareBack()
+    {
+        share.SetActive(false);
+        summary.SetActive(true);
+        teamNumber.text = "";
+        shareAmount.value = 0;
+    }
+
+    // Update share value
+    public void ShareSliderChanged()
+    {
+        shareAmountText.text = shareAmount.value.ToString();
+    }
+
+    // Update common collect value
+    public void CommonSliderChanged()
+    {
+        commonAmountText.text = commonCollect.value.ToString();
+    }
+
+    // Update private collect value
+    public void PrivateSliderChanged()
+    {
+        privateAmountText.text = privateCollect.value.ToString();
     }
 
     /* TODO Write function for second "Share" button
@@ -331,7 +366,7 @@ public class GameManager : MonoBehaviour
     Finally, hide share panel and show initial panel */
     public void ShareWithTeam()
     {
-        int team = System.Convert.ToInt32(teamNumber);
+        int team = System.Convert.ToInt32(teamNumber.text);
         if (team <= totalPlayers && !villages[team-1].GetComponent<Village>().IsActiveTurn && !villages[team - 1].GetComponent<Village>().IsDead)
         {
             villages[team - 1].GetComponent<Village>().TheShadowRealm += (int)shareAmount.value;
@@ -344,6 +379,8 @@ public class GameManager : MonoBehaviour
         {
             errorMessageTeam.text = "You can not share with this team, please pick another team or return to the action select.";
         }
+        teamNumber.text = "";
+        shareAmount.value = 0;
 
     }
 
@@ -360,6 +397,8 @@ public class GameManager : MonoBehaviour
         bonfirePopulation -= (int)commonCollect.value;
         collect.SetActive(false);
         allocation.SetActive(true);
+        commonCollect.value = 0;
+        privateCollect.value = 0;
     }
 
 
@@ -372,9 +411,9 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        int consume = System.Convert.ToInt32(consumeWood);
-        int privateRack = System.Convert.ToInt32(addToPrivate);
-        int invest = System.Convert.ToInt32(investToPrivate);
+        int consume = System.Convert.ToInt32(consumeWood.text);
+        int privateRack = System.Convert.ToInt32(addToPrivate.text);
+        int invest = System.Convert.ToInt32(investToPrivate.text);
         if(privateRack + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock >
             (int)Mathf.Pow((villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment + invest)/ 2, 1.5f))
         {
@@ -406,9 +445,9 @@ public class GameManager : MonoBehaviour
         {
             errorMessageAllocation.text = "You have not used all of the collect wood. You have " + totalWoodToAllocate + " wood to allocate. Please allocate it all.";
         }
-
-
-
+        consumeWood.text = "";
+        addToPrivate.text = "";
+        investToPrivate.text = "";
     }
 
     public void ToTheAssessment()
