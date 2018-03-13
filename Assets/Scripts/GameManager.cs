@@ -449,7 +449,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("YOU DIED.");
-                villages[activeVillageNumber = 1].GetComponent<Village>().IsDead = true;
+                villages[activeVillageNumber - 1].GetComponent<Village>().IsDead = true;
                 allocation.SetActive(false);
                 summary.SetActive(true);
                 errorMessageAllocation.text = "";
@@ -460,7 +460,7 @@ public class GameManager : MonoBehaviour
         else if(totalWoodToAllocate == 0)
         {
             Debug.Log("0");
-            villages[activeVillageNumber = 1].GetComponent<Village>().IsDead = true;
+            villages[activeVillageNumber - 1].GetComponent<Village>().IsDead = true;
             allocation.SetActive(false);
             summary.SetActive(true);
             errorMessageAllocation.text = "";
