@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text summaryText, shareAmountText, commonAmountText, privateAmountText, errorMessageTeam, errorMessageAllocation;
     [SerializeField]
-    Text bonFireAmount, endText;
+    Text bonFireAmount, endText, communalPopulation;
 
 
     // Private fields
@@ -254,7 +254,10 @@ public class GameManager : MonoBehaviour
             bonfirePopulation = Mathf.Min(commonFireCapacity,
                 (int)((bonfirePopulation * commonGrowthRate) - ((bonfirePopulation * commonGrowthRate) *
                 (bonfirePopulation / commonFireCapacity)) + bonfirePopulation));
-            for(activeVillageNumber = 1; activeVillageNumber <= totalPlayers; activeVillageNumber++)
+            //Text for the Total amount in communal bonfire
+            communalPopulation.enabled = true;
+            communalPopulation.text = "The communal bonfire holds " + bonfirePopulation + " wood.";
+            for (activeVillageNumber = 1; activeVillageNumber <= totalPlayers; activeVillageNumber++)
             {
                 if (bonfirePopulation <= 0)
                     bonfire.SetActive(false);
@@ -321,6 +324,7 @@ public class GameManager : MonoBehaviour
     {
         summary.SetActive(false);
         collect.SetActive(true);
+        communalPopulation.enabled = false;
     }
 
 
@@ -329,6 +333,7 @@ public class GameManager : MonoBehaviour
     {
         summary.SetActive(false);
         share.SetActive(true);
+        communalPopulation.enabled = false;
     }
     
     //Hide share panel and show initial panel
