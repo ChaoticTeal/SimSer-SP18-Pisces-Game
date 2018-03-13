@@ -6,17 +6,29 @@ public class Village : MonoBehaviour
 {
     // SerializeFields for assignment in-editor
     /// <summary>
-    /// Reference to hut in prefab for recoloring
+    /// Reference to flag in prefab for recoloring
     /// </summary>
-    [Tooltip("The hut portion of the prefab.")]
+    [Tooltip("The flag portion of the prefab.")]
     [SerializeField]
-    public GameObject hut;
+    public GameObject flag;
     /// <summary>
     /// List of possible spawn points for villagers
     /// </summary>
     [Tooltip("List of possible spawn points for villagers.")]
     [SerializeField]
     public List<GameObject> villagerSpawnPoints;
+    /// <summary>
+    /// Wood rack
+    /// </summary>
+    [Tooltip("Wood rack in prefab.")]
+    [SerializeField]
+    GameObject woodRack;
+    /// <summary>
+    /// Logs on wood rack
+    /// </summary>
+    [Tooltip("Logs on rack.")]
+    [SerializeField]
+    List<GameObject> logs;
 
     // Private fields
     /// <summary>
@@ -169,5 +181,25 @@ public class Village : MonoBehaviour
     {
         WoodRackStock += (int)(WoodRackStock * WoodRackStockRate);
         WoodRackStock = Mathf.Min(WoodRackStock, WoodRackCapacity);
+    }
+
+    /// <summary>
+    /// Make logs/rack visible
+    /// </summary>
+    public void UpdateWoodRack()
+    {
+        int numLogs = Mathf.RoundToInt(WoodRackStock/((float)WoodRackCapacity/logs.Count));
+        if (WoodRackCapacity > 0)
+        {
+            woodRack.SetActive(true);
+        }
+        if(numLogs > 0)
+        {
+            for (int i = 0; i < numLogs; i++)
+                logs[i].SetActive(true);
+            for (int i = numLogs; i < logs.Count; i++)
+                logs[i].SetActive(false);
+        }
+        
     }
 }

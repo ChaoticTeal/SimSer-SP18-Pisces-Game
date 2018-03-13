@@ -196,7 +196,11 @@ public class GameManager : MonoBehaviour
             villages.Add(Instantiate(villagePrefab));
 
             // Randomly add 1 to 3 villagers
-            villages[i].GetComponent<Village>().NumberOfVillagers = Random.Range(1, 4);
+            // 25/50/25 probability split for 1/2/3
+            int villagers = Random.Range(0, 4);
+            if (villagers == 0)
+                villagers = 2;
+            villages[i].GetComponent<Village>().NumberOfVillagers = villagers;
             // Add the number to the total villagers
             totalVillagers += villages[i].GetComponent<Village>().NumberOfVillagers;
             // Instantiate villagers
@@ -209,7 +213,7 @@ public class GameManager : MonoBehaviour
                 villager.GetComponent<Renderer>().material.color = playerColors[i];
             }
             // Recolor the hut
-            villages[i].GetComponent<Village>().hut.GetComponent<Renderer>().material.color = playerColors[i];
+            villages[i].GetComponent<Village>().flag.GetComponent<Renderer>().material.color = playerColors[i];
 
             // Make a new vector to set the village position
             Vector3 pos = new Vector3();
@@ -249,6 +253,7 @@ public class GameManager : MonoBehaviour
                 v.GetComponent<Village>().IsActiveTurn = false;
                 // Restock private wood racks
                 v.GetComponent<Village>().RestockRack();
+                v.GetComponent<Village>().UpdateWoodRack();
             }
             // Repopulate bonfire
             bonfirePopulation = Mathf.Min(commonFireCapacity,
@@ -264,12 +269,14 @@ public class GameManager : MonoBehaviour
                 // If the village is dead, skip it
                 if (villages[activeVillageNumber - 1].GetComponent<Village>().IsDead)
                 {
+                    Debug.Log("Village is dead");
                     foreach (int i in deadVillages)
                         if (i == activeVillageNumber)
                             deadCheck = true;
                     if (!deadCheck)
                         deadVillages.Add(activeVillageNumber);
                     deadCheck = false;
+                    Debug.Log(deadVillages);
                     continue;
                 }
                 // Note that village turn has passed
@@ -419,6 +426,7 @@ public class GameManager : MonoBehaviour
         int consume = System.Convert.ToInt32(consumeWood.text);
         int privateRack = System.Convert.ToInt32(addToPrivate.text);
         int invest = System.Convert.ToInt32(investToPrivate.text);
+        Debug.Log(consume + " , " + privateRack + " , " + invest + " , " + totalWoodToAllocate);
         if(privateRack + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock >
             (int)Mathf.Pow((villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment + invest)/ 2, 1.5f))
         {
@@ -428,31 +436,40 @@ public class GameManager : MonoBehaviour
         {
             if((logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) <= consume)
             {
+                Debug.Log("Survival");
                 villages[activeVillageNumber - 1].GetComponent<Village>().TotalLogsConsumed += consume;
                 villages[activeVillageNumber - 1].GetComponent<Village>().AddWoodToRack(privateRack);
-                villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment = invest;
+                villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment += invest;
                 allocation.SetActive(false);
                 summary.SetActive(true);
-
+                errorMessageAllocation.text = "";
                 turnEnd = true;
 
             }
             else
             {
+                Debug.Log("YOU DIED.");
                 villages[activeVillageNumber = 1].GetComponent<Village>().IsDead = true;
                 allocation.SetActive(false);
                 summary.SetActive(true);
+                errorMessageAllocation.text = "";
                 turnEnd = true;
             }
 
         }
+        else if(totalWoodToAllocate == 0)
+        {
+            Debug.Log("0");
+            villages[activeVillageNumber = 1].GetComponent<Village>().IsDead = true;
+            allocation.SetActive(false);
+            summary.SetActive(true);
+            errorMessageAllocation.text = "";
+            turnEnd = true;
+        }
         else
         {
-            errorMessageAllocation.text = "You have not used all of the collect wood. You have " + totalWoodToAllocate + " wood to allocate. Please allocate it all.";
+            errorMessageAllocation.text = "You have not used all of the collected wood. You have " + totalWoodToAllocate + " wood to allocate. Please allocate it all.";
         }
-        consumeWood.text = "";
-        addToPrivate.text = "";
-        investToPrivate.text = "";
     }
 
     public void ToTheAssessment()
