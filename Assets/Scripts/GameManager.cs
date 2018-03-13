@@ -269,7 +269,6 @@ public class GameManager : MonoBehaviour
                 // If the village is dead, skip it
                 if (villages[activeVillageNumber - 1].GetComponent<Village>().IsDead)
                 {
-                    Debug.Log("Village is dead");
                     foreach (int i in deadVillages)
                         if (i == activeVillageNumber)
                             deadCheck = true;
@@ -285,7 +284,7 @@ public class GameManager : MonoBehaviour
                 // Identify active player in player text
                 currentPlayerTag.text = "Player " + (activeVillageNumber);
 
-                // TODO add summary to the first panel
+                // Add summary to the first panel
                 summaryText.text = "You have " + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villager(s) to care for. You need "
                     + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm them all. Your private wood rack contains "
                     + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold " + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackCapacity + ". What would you like to do?";
@@ -307,7 +306,6 @@ public class GameManager : MonoBehaviour
                 turnEnd = false;
             }
         }
-        // TODO trigger end state
         summary.SetActive(false);
         end.SetActive(true);
         playerTag.SetActive(false);
@@ -370,8 +368,8 @@ public class GameManager : MonoBehaviour
         privateAmountText.text = privateCollect.value.ToString();
     }
 
-    /* TODO Write function for second "Share" button
-    Should validate that the target village hasn't gone and fail if it has
+    /*
+    Validate that the target village hasn't gone and fail if it has
     (should be simple, check whether the village of the given number's IsActiveTurn is true, if so, it's gone)
     Set the slider max value to the total logs possessed by village of number activeVillageNumber - 1
     If the target village is eligible to receive wood, add to the target village and subtract from the current village
@@ -397,7 +395,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    /* TODO Write function for collect "Continue" button
+    /*
     Validate that the common fire contains that much wood
     If all goes well, save the value for the next panel, hide the collect panel and show the allocation panel
     */
@@ -414,8 +412,8 @@ public class GameManager : MonoBehaviour
     }
 
 
-    /* TODO Write function for "End Turn" button
-    Should validate the values in each input field
+    /* 
+    Validate the values in each input field
     If they add up properly, add each value to its respective place
     Check if the village dies (can't sustain all members) and assign accordingly
     Finally, tell the coroutine to continue, hide the allocation panel, and show the initial panel
@@ -426,7 +424,6 @@ public class GameManager : MonoBehaviour
         int consume = System.Convert.ToInt32(consumeWood.text);
         int privateRack = System.Convert.ToInt32(addToPrivate.text);
         int invest = System.Convert.ToInt32(investToPrivate.text);
-        Debug.Log(consume + " , " + privateRack + " , " + invest + " , " + totalWoodToAllocate);
         if(privateRack + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock >
             (int)Mathf.Pow((villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment + invest)/ 2, 1.5f))
         {
@@ -436,7 +433,6 @@ public class GameManager : MonoBehaviour
         {
             if((logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) <= consume)
             {
-                Debug.Log("Survival");
                 villages[activeVillageNumber - 1].GetComponent<Village>().TotalLogsConsumed += consume;
                 villages[activeVillageNumber - 1].GetComponent<Village>().AddWoodToRack(privateRack);
                 villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment += invest;
@@ -448,7 +444,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("YOU DIED.");
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsDead = true;
                 allocation.SetActive(false);
                 summary.SetActive(true);
@@ -459,7 +454,6 @@ public class GameManager : MonoBehaviour
         }
         else if(totalWoodToAllocate == 0)
         {
-            Debug.Log("0");
             villages[activeVillageNumber - 1].GetComponent<Village>().IsDead = true;
             allocation.SetActive(false);
             summary.SetActive(true);
