@@ -102,7 +102,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text summaryText, shareAmountText, commonAmountText, allocationToSurvive, privateAmountText, errorMessageTeam, errorMessageAllocation;
     [SerializeField]
-    Text bonFireAmount, endText, communalPopulation;
+    Text bonFireAmount, endText, communalPopulation, roundNumberText;
+    [SerializeField]
+    InputField investment;
 
 
     // Private fields
@@ -262,6 +264,7 @@ public class GameManager : MonoBehaviour
             //Text for the Total amount in communal bonfire
             communalPopulation.enabled = true;
             communalPopulation.text = "The communal bonfire holds " + bonfirePopulation + " wood.";
+            roundNumberText.text = "Round Number: " + roundNumber;
             for (activeVillageNumber = 1; activeVillageNumber <= totalPlayers; activeVillageNumber++)
             {
                 if (bonfirePopulation <= 0)
@@ -415,6 +418,15 @@ public class GameManager : MonoBehaviour
         allocation.SetActive(true);
         commonCollect.value = 0;
         privateCollect.value = 0;
+        if(roundNumber ==1)
+        {
+            investment.enabled = false;
+            
+        }
+        else
+        {
+            investment.enabled = true;
+        }
     }
 
 
@@ -427,9 +439,18 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
+        int invest;
         int consume = System.Convert.ToInt32(consumeWood.text);
         int privateRack = System.Convert.ToInt32(addToPrivate.text);
-        int invest = System.Convert.ToInt32(investToPrivate.text);
+        if (roundNumber == 1)
+        {
+            invest = 0;
+        }
+        else
+        {
+            invest = System.Convert.ToInt32(investToPrivate.text);
+        }
+        
         if(privateRack + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock >
             (int)Mathf.Pow((villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackInvestment + invest)/ 2, 1.5f))
         {
