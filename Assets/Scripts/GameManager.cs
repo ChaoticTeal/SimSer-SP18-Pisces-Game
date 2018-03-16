@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text currentPlayerTag;
     [SerializeField]
-    GameObject summary, share, collect, allocation, end, playerTag;
+    GameObject summary, share, collect, allocation, end, playerTag, exitGame;
     [SerializeField]
     Slider shareAmount;
     [SerializeField]
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text consumeWood, addToPrivate, investToPrivate;
     [SerializeField]
-    Text summaryText, shareAmountText, commonAmountText, privateAmountText, errorMessageTeam, errorMessageAllocation;
+    Text summaryText, shareAmountText, commonAmountText, allocationToSurvive, privateAmountText, errorMessageTeam, errorMessageAllocation;
     [SerializeField]
     Text bonFireAmount, endText, communalPopulation;
 
@@ -290,6 +290,8 @@ public class GameManager : MonoBehaviour
                     + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm them all. Your private wood rack contains "
                     + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold " + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackCapacity + ". What would you like to do?";
 
+                allocationToSurvive.text = "You need " + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm all your villagers. How would you like to allocate the wood you collected?";
+
                 shareAmount.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock;
                 shareAmountText.text = shareAmount.value.ToString("0");
                 //Set slider max value to the maximum logs possible per round
@@ -312,15 +314,19 @@ public class GameManager : MonoBehaviour
         end.SetActive(true);
         playerTag.SetActive(false);
         bonFireAmount.text = "The amount of wood in the communal bonfire is " + bonfirePopulation;
-        if(bonfirePopulation == 0)
+        if (bonfirePopulation == 0 && deadVillages.Count == totalPlayers)
         {
-            endText.text = "Your actions have caused the complete elimination of wood in your willages. Survival is nearly impossible. " +
+            endText.text = "Your actions have caused the complete elimination of wood in your willages. Survival was impossible. " +
                 "Take in to account the actions for the greater good than actions for selfish greed. Welcome to the Tragedy of the Commons.";
+        }
+        else if (bonfirePopulation > 0 && deadVillages.Count == totalPlayers)
+        {
+            endText.text = "The villages have all gone extinct, yet the bonfire remains. Nature heals from the abuse it had received. Your actions have saved the planet from global warming.";
         }
         else
         {
             endText.text = "The villages have survived the years with wood intact. " +
-                "Actions that protect the community are far more rewarding than those that focus on a single person's greed. Welcome to the Tragedy of the Commons.";
+               "Actions that protect the community are far more rewarding than those that focus on a single person's greed. Welcome to the Tragedy of the Commons.";
         }
         yield return null;
     }
@@ -475,5 +481,20 @@ public class GameManager : MonoBehaviour
     public void ToTheAssessment()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void Exiting()
+    {
+        exitGame.SetActive(true);
+    }
+
+    public void ContinueGame()
+    {
+        exitGame.SetActive(false);
+    }
+
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
