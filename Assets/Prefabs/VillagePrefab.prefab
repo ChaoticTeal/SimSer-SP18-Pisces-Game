@@ -576,8 +576,10 @@ MonoBehaviour:
   - {fileID: 1940997332164590}
   - {fileID: 1072450614639832}
   - {fileID: 1166388814176282}
+  gravePrefab: {fileID: 100000, guid: acb16e520d4742e4292cd121c447192f, type: 3}
   woodRack: {fileID: 1632742609303112}
   logs:
   - {fileID: 1020428689315292}
   - {fileID: 1561124029195766}
   - {fileID: 1561393829521672}
+  villagers: []

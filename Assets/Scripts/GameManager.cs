@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("The bonfire.")]
     [SerializeField]
     GameObject bonfire;
+    [SerializeField]
+    GameObject playerPanel;
 
     //SerializeFields related to the UI
     [SerializeField]
@@ -286,13 +288,21 @@ public class GameManager : MonoBehaviour
                 cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
                 // Identify active player in player text
                 currentPlayerTag.text = "Player " + (activeVillageNumber);
+                playerPanel.GetComponent<Image>().color = playerColors[activeVillageNumber - 1];
 
                 // Add summary to the first panel
-                summaryText.text = "You have " + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villager(s) to care for. You need "
-                    + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm them all. Your private wood rack contains "
-                    + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock + " wood and can hold " + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackCapacity + ". What would you like to do?";
+                summaryText.text = "You have <color=#" + ColorUtility.ToHtmlStringRGB(playerColors[activeVillageNumber - 1]) + ">" 
+                    + villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers + " villager(s)</color> to care for. You need <color=#"
+                    + ColorUtility.ToHtmlStringRGB(playerColors[activeVillageNumber - 1]) + ">" 
+                    + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) 
+                    + "</color> to warm them all. Your private wood rack contains <color=#" + ColorUtility.ToHtmlStringRGB(playerColors[activeVillageNumber - 1]) 
+                    + ">" + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock  + " wood</color> and can hold <color=#" 
+                    + ColorUtility.ToHtmlStringRGB(playerColors[activeVillageNumber - 1]) + ">" 
+                    + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackCapacity + "</color>. What would you like to do?";
 
-                allocationToSurvive.text = "You need " + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) + " to warm all your villagers. How would you like to allocate the wood you collected?";
+                allocationToSurvive.text = "You need <color=#" + ColorUtility.ToHtmlStringRGB(playerColors[activeVillageNumber - 1]) + ">" 
+                    + (logsToLive * villages[activeVillageNumber - 1].GetComponent<Village>().NumberOfVillagers) 
+                    + "</color> to warm all your villagers. How would you like to allocate the wood you collected?";
 
                 shareAmount.maxValue = villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock;
                 shareAmountText.text = shareAmount.value.ToString("0");

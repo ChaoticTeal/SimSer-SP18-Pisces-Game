@@ -18,6 +18,12 @@ public class Village : MonoBehaviour
     [SerializeField]
     public List<GameObject> villagerSpawnPoints;
     /// <summary>
+    /// Grave
+    /// </summary>
+    [Tooltip("Grave prefab")]
+    [SerializeField]
+    GameObject gravePrefab;
+    /// <summary>
     /// Wood rack
     /// </summary>
     [Tooltip("Wood rack in prefab.")]
@@ -30,11 +36,20 @@ public class Village : MonoBehaviour
     [SerializeField]
     List<GameObject> logs;
 
+    /// <summary>
+    /// Active villagers
+    /// </summary>
+    public List<GameObject> villagers = new List<GameObject>();
+
     // Private fields
     /// <summary>
     /// Is the village active?
     /// </summary>
     bool isActiveTurn_UseProperty;
+    /// <summary>
+    /// Is the village dead?
+    /// </summary>
+    bool isDead_UseProperty;
     /// <summary>
     /// Restock rate of wood rack
     /// </summary>
@@ -78,7 +93,21 @@ public class Village : MonoBehaviour
     /// </summary>
     public bool IsDead
     {
-        get; set;
+        get { return isDead_UseProperty; }
+        set
+        {
+            isDead_UseProperty = value;
+            if(isDead_UseProperty == true)
+            {
+                foreach(GameObject g in villagers)
+                {
+                    GameObject grave = Instantiate(gravePrefab);
+                    // Place the grave at the spawn point
+                    grave.transform.position = g.transform.position;
+                    g.SetActive(false);
+                }
+            }
+        }
     }
     /// <summary>
     /// Public accessor for wood rack stock rate

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1225,7 +1225,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 0
 --- !u!222 &410724111
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2791,7 +2791,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 0
 --- !u!222 &980871033
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3030,6 +3030,7 @@ MonoBehaviour:
   numberOfGenerations: 1
   numberOfRounds: 8
   bonfire: {fileID: 2032915176}
+  playerPanel: {fileID: 130684778}
   currentPlayerTag: {fileID: 634841827}
   summary: {fileID: 1381226476}
   share: {fileID: 1532727515}
@@ -3055,7 +3056,7 @@ MonoBehaviour:
   bonFireAmount: {fileID: 954882845}
   endText: {fileID: 270270205}
   communalPopulation: {fileID: 1932581672}
-  roundNumberText: {fileID: 0}
+  roundNumberText: {fileID: 1730724701}
   investment: {fileID: 484604985}
 --- !u!4 &1030337996
 Transform:
@@ -3849,7 +3850,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 0
 --- !u!222 &1296694932
 CanvasRenderer:
   m_ObjectHideFlags: 0
