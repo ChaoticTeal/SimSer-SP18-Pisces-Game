@@ -87,6 +87,12 @@ public class GameManager : MonoBehaviour
     GameObject bonfire;
     [SerializeField]
     GameObject playerPanel;
+    [SerializeField]
+    GameObject villagePanel;
+    [SerializeField]
+    GameObject overallSummaryPanel;
+    [SerializeField]
+    GameObject buildPanel, privatePanel;
 
     //SerializeFields related to the UI
     [SerializeField]
@@ -143,6 +149,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     List<GameObject> villages = new List<GameObject>();
     /// <summary>
+    /// List of village panels
+    /// </summary>
+    List<GameObject> villagePanels = new List<GameObject>();
+    /// <summary>
     /// List of dead villages
     /// </summary>
     List<int> deadVillages = new List<int>();
@@ -196,15 +206,19 @@ public class GameManager : MonoBehaviour
         // Loop per player
         for(int i = 0; i < totalPlayers; i++)
         {
-            // Instantiate the village
+            // Instantiate the village and panel
             villages.Add(Instantiate(villagePrefab));
+            villagePanels.Add(Instantiate(villagePanel, overallSummaryPanel.transform));
 
+            villagePanels[i].transform.Find("Title").GetComponent<Text>().text = "Player " + (i + 1);
             // Randomly add 1 to 3 villagers
             // 25/50/25 probability split for 1/2/3
             int villagers = Random.Range(0, 4);
             if (villagers == 0)
                 villagers = 2;
             villages[i].GetComponent<Village>().NumberOfVillagers = villagers;
+            // Set the villager count on the text panel
+            villagePanels[i].transform.Find("Villagers").GetComponent<Text>().text = villagers.ToString();
             // Add the number to the total villagers
             totalVillagers += villages[i].GetComponent<Village>().NumberOfVillagers;
             // Instantiate villagers
@@ -283,6 +297,9 @@ public class GameManager : MonoBehaviour
                     Debug.Log(deadVillages);
                     continue;
                 }
+                Color panelColor = playerColors[activeVillageNumber - 1];
+                panelColor.a = .5f;
+                villagePanels[activeVillageNumber - 1].GetComponent<Image>().color = panelColor;
                 // Note that village turn has passed
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsActiveTurn = true;
                 cameraRig.transform.LookAt(villages[activeVillageNumber - 1].transform);
@@ -319,6 +336,9 @@ public class GameManager : MonoBehaviour
                 while(!turnEnd)
                     yield return null;
                 turnEnd = false;
+                villagePanels[activeVillageNumber - 1].transform.Find("WoodStock").GetComponent<Text>().text =
+                    villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock.ToString();
+                villagePanels[activeVillageNumber - 1].GetComponent<Image>().color = Color.clear;
             }
         }
         summary.SetActive(false);
@@ -428,14 +448,10 @@ public class GameManager : MonoBehaviour
         allocation.SetActive(true);
         commonCollect.value = 0;
         privateCollect.value = 0;
-        if(roundNumber ==1)
+        if(roundNumber > 1)
         {
-            investment.enabled = false;
-            
-        }
-        else
-        {
-            investment.enabled = true;
+            buildPanel.SetActive(true);
+            privatePanel.SetActive(true);
         }
     }
 
@@ -449,16 +465,13 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        int invest;
+        int invest = 0;
         int consume = System.Convert.ToInt32(consumeWood.text);
-        int privateRack = System.Convert.ToInt32(addToPrivate.text);
-        if (roundNumber == 1)
-        {
-            invest = 0;
-        }
-        else
+        int privateRack = 0;
+        if(roundNumber > 1)
         {
             invest = System.Convert.ToInt32(investToPrivate.text);
+            privateRack = System.Convert.ToInt32(addToPrivate.text);
         }
         
         if(privateRack + villages[activeVillageNumber - 1].GetComponent<Village>().WoodRackStock >
