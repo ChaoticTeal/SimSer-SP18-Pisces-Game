@@ -99,6 +99,19 @@ public class Village : MonoBehaviour
             isDead_UseProperty = value;
             if(isDead_UseProperty == true)
             {
+                for(int i = 0; i< NumberOfVillagers; i++)
+                {
+                    GameObject gameObject = gravePrefab;
+                    villagers.Add(gameObject);
+                }// So the problem was you are calling the game object in villagers below but that wasnt set to anything
+                // So when you called the foreach loop below it skipped the instantiation of the graves
+
+                // The problem with my code is it is passing the gravePrefab as the game object being put into the list of villagers
+                // This makes it so the g used below is the gravePrefab so it zeros the location and doesnt kill the players
+
+                // What we need is the Players Game object passed here so that it gets the proper info for location etc and kills the players themselves rather than a prefab.
+
+                
                 foreach(GameObject g in villagers)
                 {
                     GameObject grave = Instantiate(gravePrefab);

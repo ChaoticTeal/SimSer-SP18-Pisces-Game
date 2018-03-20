@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [Tooltip("Villager prefab. It's just a capsule.")]
     [SerializeField]
-    GameObject villagerPrefab;
+     GameObject villagerPrefab;
     /// <summary>
     /// Multiplier for use in common capacity calculation.
     /// </summary>
@@ -144,6 +144,8 @@ public class GameManager : MonoBehaviour
     /// Total number of villagers across all villagers
     /// </summary>
     int totalVillagers;
+
+    
     /// <summary>
     /// List of village instances
     /// </summary>
@@ -224,7 +226,7 @@ public class GameManager : MonoBehaviour
             // Instantiate villagers
             for(int j = 0; j < villages[i].GetComponent<Village>().NumberOfVillagers; j++)
             {
-                GameObject villager = Instantiate(villagerPrefab, villages[i].transform);
+               GameObject villager = Instantiate(villagerPrefab, villages[i].transform);
                 // Place the villager at the spawn point
                 villager.transform.position = villages[i].GetComponent<Village>().villagerSpawnPoints[j].transform.position;
                 // Recolor the villager
@@ -494,6 +496,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                
                 villages[activeVillageNumber - 1].GetComponent<Village>().IsDead = true;
                 allocation.SetActive(false);
                 summary.SetActive(true);
