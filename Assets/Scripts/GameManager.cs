@@ -231,6 +231,7 @@ public class GameManager : MonoBehaviour
                 villager.transform.position = villages[i].GetComponent<Village>().villagerSpawnPoints[j].transform.position;
                 // Recolor the villager
                 villager.GetComponent<Renderer>().material.color = playerColors[i];
+                villages[i].GetComponent<Village>().villagers.Add(villager);
             }
             // Recolor the hut
             villages[i].GetComponent<Village>().flag.GetComponent<Renderer>().material.color = playerColors[i];
