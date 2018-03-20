@@ -78,6 +78,7 @@ public class Village : MonoBehaviour
     /// Logs stocked in private wood rack
     /// </summary>
     int woodRackStock_UseProperty;
+    List<GameObject> graves = new List<GameObject>();
 
     // Properties
     /// <summary>
@@ -99,12 +100,11 @@ public class Village : MonoBehaviour
             isDead_UseProperty = value;
             if(isDead_UseProperty == true)
             {
-                foreach(GameObject g in villagers)
+                for(int i = 0; i < NumberOfVillagers; i++)
                 {
-                    GameObject grave = Instantiate(gravePrefab);
-                    // Place the grave at the spawn point
-                    grave.transform.position = g.transform.position;
-                    g.SetActive(false);
+                    graves.Add(Instantiate(gravePrefab, gameObject.transform));
+                    graves[i].transform.position = villagers[i].transform.position;
+                    villagers[i].SetActive(false);
                 }
             }
         }
